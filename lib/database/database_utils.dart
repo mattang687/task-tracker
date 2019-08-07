@@ -67,6 +67,7 @@ class DatabaseUtils {
       'tasks',
       where: 'date = ?',
       whereArgs: [dateTime.millisecondsSinceEpoch],
+      orderBy: 'endTime',
     );
 
     // turn maps into tasks

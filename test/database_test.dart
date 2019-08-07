@@ -76,4 +76,48 @@ void main() {
     List<Task> result = await db.queryDate(DateTime.parse("2019-08-06"));
     expect(result.length, 0);
   });
+
+  test('Insert no id, query and get id', () async {
+    final DatabaseUtils db = DatabaseUtils.instance;
+    db.clear();
+
+    DateTime dateTime = DateTime.parse("2019-08-06");
+    Task t = new Task(
+      name: "test task",
+      notes: "a note",
+      date: dateTime.millisecondsSinceEpoch,
+      startTime: dateTime.millisecondsSinceEpoch,
+      endTime: dateTime.millisecondsSinceEpoch + 1000,
+    );
+    db.insertTask(t);
+    List<Task> result = await db.queryDate(DateTime.parse("2019-08-06"));
+    expect(result[0].id, 1);
+  });
+
+  test('Insert multiple, query order by end time', () async {
+    final DatabaseUtils db = DatabaseUtils.instance;
+    db.clear();
+
+    DateTime dateTime = DateTime.parse("2019-08-06");
+    Task taskA = new Task(
+      name: "task A",
+      notes: "a note",
+      date: dateTime.millisecondsSinceEpoch,
+      startTime: dateTime.millisecondsSinceEpoch,
+      endTime: dateTime.millisecondsSinceEpoch + 1000,
+    );
+    Task taskB = new Task(
+      name: "task B",
+      notes: "a note",
+      date: dateTime.millisecondsSinceEpoch,
+      startTime: dateTime.millisecondsSinceEpoch,
+      endTime: dateTime.millisecondsSinceEpoch + 2000,
+    );
+    db.insertTask(taskA);
+    db.insertTask(taskB);
+    List<Task> result = await db.queryDate(DateTime.parse("2019-08-06"));
+    expect(result.length, 2);
+    expect(result[0].name, "task A");
+    expect(result[1].name, "task B");
+  });
 }
