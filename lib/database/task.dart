@@ -1,36 +1,29 @@
 class Task {
-  Task(
-      {this.id,
-      this.name,
-      this.notes,
-      this.time,
-      this.repeatInterval,
-      this.weekday,
-      this.day,
-      this.month,
-      this.year});
+  Task({
+    this.id,
+    this.name,
+    this.notes,
+    this.date,
+    this.startTime,
+    this.endTime,
+  });
 
   int id;
   String name;
   String notes;
-  int time;
-  int repeatInterval;
-  // weedays are stored 1-7, 1 being monday
-  int weekday;
-  int day;
-  String month;
-  int year;
+  // date is in milliseconds since epoch / 86400000
+  int date;
+  // time is in milliseconds since epoch
+  int startTime;
+  int endTime;
 
   static final columns = [
     "id",
     "name",
     "notes",
-    "time",
-    "repeatInterval",
-    "weekday",
-    "day",
-    "month",
-    "year"
+    "date",
+    "startTime",
+    "endTime",
   ];
 
   Map<String, dynamic> toMap() {
@@ -38,12 +31,9 @@ class Task {
       "id": id,
       "name": name,
       "notes": notes,
-      "time": time,
-      "repeatInterval": repeatInterval,
-      "day": weekday,
-      "day": day,
-      "month": month,
-      "year": year,
+      "date": date,
+      "startTime": startTime,
+      "endTime": endTime,
     };
   }
 
@@ -52,21 +42,9 @@ class Task {
       id: map["id"],
       name: map["name"],
       notes: map["notes"],
-      time: map["time"],
-      repeatInterval: map["repeatInterval"],
-      weekday: map["weekday"],
-      day: map["day"],
-      month: map["month"],
-      year: map["year"],
+      date: map["date"],
+      startTime: map["startTime"],
+      endTime: map["endTime"],
     );
-  }
-
-  // determines if a task is repeated
-  bool isRepeated() {
-    return (repeatInterval != null ||
-        weekday == null ||
-        day == null ||
-        month == null ||
-        year == null);
   }
 }
