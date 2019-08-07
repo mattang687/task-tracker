@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:time_manager/database/database_utils.dart';
+import 'package:time_manager/database/database_wrapper.dart';
 import 'package:time_manager/database/task.dart';
 
 // to be run through an emulator/device with "flutter run test/database_test.dart"
 void main() {
   test('Insert single, query date', () async {
-    final DatabaseUtils db = DatabaseUtils.instance;
+    final DatabaseWrapper db = DatabaseWrapper.instance;
     db.clear();
 
     DateTime dateTime = DateTime.parse("2019-08-06");
@@ -20,10 +20,11 @@ void main() {
     db.insertTask(t);
     List<Task> result = await db.queryDate(DateTime.parse("2019-08-06"));
     expect(result.length, 1);
+    expect(result[0].status, Status.incomplete);
   });
 
   test('Insert single, update', () async {
-    final DatabaseUtils db = DatabaseUtils.instance;
+    final DatabaseWrapper db = DatabaseWrapper.instance;
     db.clear();
 
     DateTime dateTime = DateTime.parse("2019-08-06");
@@ -59,7 +60,7 @@ void main() {
   });
 
   test('Insert single, delete', () async {
-    final DatabaseUtils db = DatabaseUtils.instance;
+    final DatabaseWrapper db = DatabaseWrapper.instance;
     db.clear();
 
     DateTime dateTime = DateTime.parse("2019-08-06");
@@ -78,7 +79,7 @@ void main() {
   });
 
   test('Insert no id, query and get id', () async {
-    final DatabaseUtils db = DatabaseUtils.instance;
+    final DatabaseWrapper db = DatabaseWrapper.instance;
     db.clear();
 
     DateTime dateTime = DateTime.parse("2019-08-06");
@@ -95,7 +96,7 @@ void main() {
   });
 
   test('Insert multiple, query order by end time', () async {
-    final DatabaseUtils db = DatabaseUtils.instance;
+    final DatabaseWrapper db = DatabaseWrapper.instance;
     db.clear();
 
     DateTime dateTime = DateTime.parse("2019-08-06");

@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
+
 class Task {
   Task({
     this.id,
-    this.name,
-    this.notes,
-    this.date,
-    this.startTime,
-    this.endTime,
+    @required this.name,
+    @required this.notes,
+    @required this.date,
+    @required this.startTime,
+    @required this.endTime,
+    this.status = Status.incomplete,
   });
 
   int id;
@@ -16,6 +19,7 @@ class Task {
   // time is in milliseconds since epoch
   int startTime;
   int endTime;
+  Status status;
 
   static final columns = [
     "id",
@@ -24,6 +28,7 @@ class Task {
     "date",
     "startTime",
     "endTime",
+    "status",
   ];
 
   Map<String, dynamic> toMap() {
@@ -34,6 +39,7 @@ class Task {
       "date": date,
       "startTime": startTime,
       "endTime": endTime,
+      "status": status.index,
     };
   }
 
@@ -45,6 +51,9 @@ class Task {
       date: map["date"],
       startTime: map["startTime"],
       endTime: map["endTime"],
+      status: Status.values[map["status"]],
     );
   }
 }
+
+enum Status { incomplete, complete, moved, canceled }

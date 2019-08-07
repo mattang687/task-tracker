@@ -6,13 +6,13 @@ import 'package:path_provider/path_provider.dart';
 
 import 'task.dart';
 
-class DatabaseUtils {
+class DatabaseWrapper {
   static final _databaseName = "Database.db";
   static final _databaseVersion = 1;
 
   // singleton class
-  DatabaseUtils._privateConstructor();
-  static final DatabaseUtils instance = DatabaseUtils._privateConstructor();
+  DatabaseWrapper._privateConstructor();
+  static final DatabaseWrapper instance = DatabaseWrapper._privateConstructor();
 
   static Database _database;
   Future<Database> get database async {
@@ -42,7 +42,8 @@ class DatabaseUtils {
         notes TEXT,
         date INTEGER,
         startTime INTEGER,
-        endTime INTEGER
+        endTime INTEGER,
+        status INTEGER
       )
     ''');
   }
