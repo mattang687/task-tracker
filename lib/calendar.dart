@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:time_manager/database/database_model.dart';
+
+import 'database/task.dart';
 
 class CalendarWidget extends StatefulWidget {
   @override
@@ -8,7 +12,8 @@ class CalendarWidget extends StatefulWidget {
   }
 }
 
-class CalendarWidgetState extends State<CalendarWidget> with TickerProviderStateMixin {
+class CalendarWidgetState extends State<CalendarWidget>
+    with TickerProviderStateMixin {
   CalendarController _calendarController;
   AnimationController _animationController;
   Map<DateTime, List> _events;
@@ -62,9 +67,26 @@ class CalendarWidgetState extends State<CalendarWidget> with TickerProviderState
         weekendStyle: TextStyle().copyWith(color: Colors.blue[600]),
       ),
       onVisibleDaysChanged: _onVisibleDaysChanged,
+      onDaySelected: _onDaySelected,
     );
   }
-  _onVisibleDaysChanged(DateTime first, DateTime last, CalendarFormat format) {
-    // TODO: send date to appbar
+
+  _onVisibleDaysChanged(
+      DateTime first, DateTime last, CalendarFormat format) async {
+    // get events on every day from first to last, update events
+    DatabaseModel databaseModel = Provider.of<DatabaseModel>(context);
+    while (first.millisecondsSinceEpoch <= last.millisecondsSinceEpoch) {
+      List<Task> tasks = await databaseModel.getTasks(first);
+      setState(() {
+        _events[first] = tasks;
+      });
+      first.add(Duration(days: 1));
+    }
+  }
+
+  _onDaySelected(DateTime day, List events) {
+    // update selected tasks
+    DatabaseModel databaseModel = Provider.of<DatabaseModel>(context);
+    databaseModel.updateSelectedTasks(day);
   }
 }

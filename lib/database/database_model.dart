@@ -5,11 +5,15 @@ import 'package:time_manager/database/task.dart';
 class DatabaseModel with ChangeNotifier {
   DatabaseWrapper db = DatabaseWrapper.instance;
   // tasks to be displayed
-  List<Task> tasks = new List<Task>();
+  List<Task> selectedTasks = new List<Task>();
 
-  Future<void> getTasks(DateTime date) async {
-    tasks = await db.queryDate(date);
+  Future<void> updateSelectedTasks(DateTime date) async {
+    selectedTasks = await db.queryDate(date);
     notifyListeners();
+  }
+
+  Future<List<Task>> getTasks(DateTime date) async {
+    return await db.queryDate(date);
   }
 
   Future<void> createTask(Task task) async {
