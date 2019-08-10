@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_manager/database/database_model.dart';
-import 'home_screen.dart';
+import 'package:time_manager/home_screen/selected_tasks.dart';
+import 'home_screen/home_screen.dart';
 
 void main() => runApp(
       MultiProvider(
@@ -10,7 +11,12 @@ void main() => runApp(
         ],
         child: MaterialApp(
           title: 'Time Tracker',
-          home: HomeScreen(),
+          home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<SelectedDate>.value(value: SelectedDate()),
+            ],
+            child: HomeScreen(),
+          ),
         ),
       ),
     );

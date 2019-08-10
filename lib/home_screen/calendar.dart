@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:time_manager/database/database_model.dart';
 
-import 'database/task.dart';
+import '../database/task.dart';
+import 'selected_tasks.dart';
 
 class CalendarWidget extends StatefulWidget {
   @override
@@ -17,17 +18,13 @@ class CalendarWidgetState extends State<CalendarWidget>
   CalendarController _calendarController;
   AnimationController _animationController;
   Map<DateTime, List> _events;
-  List _selectedEvents;
 
   @override
   void initState() {
     super.initState();
     _calendarController = CalendarController();
 
-    DateTime _selectedDay = DateTime.now();
-
     _events = {};
-    _selectedEvents = _events[_selectedDay] ?? [];
 
     AnimationController _animationController = AnimationController(
       vsync: this,
@@ -84,9 +81,10 @@ class CalendarWidgetState extends State<CalendarWidget>
     }
   }
 
-  _onDaySelected(DateTime day, List events) {
+  _onDaySelected(DateTime day, List events) async {
     // update selected tasks
     DatabaseModel databaseModel = Provider.of<DatabaseModel>(context);
-    databaseModel.updateSelectedTasks(day);
+    SelectedTasks selectedTasks = Provider.of<SelectedTasks>(context);
+    selectedTasks.setSelectedTasks(await databaseModel.getTasks(day));
   }
 }
