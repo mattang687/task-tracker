@@ -4,7 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:time_manager/database/database_model.dart';
 
 import '../database/task.dart';
-import 'selected_tasks.dart';
+import 'selected_info.dart';
 
 class CalendarWidget extends StatefulWidget {
   @override
@@ -84,7 +84,7 @@ class CalendarWidgetState extends State<CalendarWidget>
   _onDaySelected(DateTime day, List events) async {
     // update selected tasks
     DatabaseModel databaseModel = Provider.of<DatabaseModel>(context);
-    SelectedTasks selectedTasks = Provider.of<SelectedTasks>(context);
-    selectedTasks.setSelectedTasks(await databaseModel.getTasks(day));
+    SelectedInfo selectedInfo = Provider.of<SelectedInfo>(context);
+    selectedInfo.setSelectedInfo(await databaseModel.getTasks(day));
   }
 }
