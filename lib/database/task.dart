@@ -14,7 +14,7 @@ class Task {
   int id;
   String name;
   String notes;
-  // date is in milliseconds since epoch / 86400000
+  // date is in milliseconds since epoch
   int date;
   // time is in milliseconds since epoch
   int startTime;

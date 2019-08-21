@@ -82,6 +82,8 @@ class CalendarWidgetState extends State<CalendarWidget>
   }
 
   _onDaySelected(DateTime day, List events) async {
+    // round down day
+    day = DateTime(day.year, day.month, day.day);
     // update selected tasks
     DatabaseModel databaseModel = Provider.of<DatabaseModel>(context);
     SelectedInfo selectedInfo = Provider.of<SelectedInfo>(context);

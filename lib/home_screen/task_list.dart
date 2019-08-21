@@ -6,8 +6,7 @@ import 'package:time_manager/home_screen/selected_info.dart';
 class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Task> selectedTasks = [Task(name: "Test", status: Status.incomplete)];
-    //Provider.of<SelectedInfo>(context).selectedTasks;
+    List<Task> selectedTasks = Provider.of<SelectedInfo>(context).selectedTasks;
 
     Icon _getIcon(Task task) {
       switch (task.status) {
