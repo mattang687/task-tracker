@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-
-import '../database/task.dart';
+import 'package:time_manager/database/task.dart';
 
 class SelectedInfo with ChangeNotifier {
   DateTime date;

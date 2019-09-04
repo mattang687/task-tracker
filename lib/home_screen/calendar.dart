@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:time_manager/database/database_model.dart';
+import 'package:time_manager/database/task.dart';
 
-import '../database/task.dart';
 import 'selected_info.dart';
 
 class CalendarWidget extends StatefulWidget {
